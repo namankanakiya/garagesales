@@ -1,0 +1,94 @@
+@*
+* This component is what user sees when they have logged-in successfully.
+*@
+@(user: User, allSales: List[Sale])
+
+@usercomponent("Your Garage Sales", user) {
+
+    <div class="jumbotron">
+        <h1>Hello, @user.username!</h1>
+        <p><p>You are a part of @user.modifiedSize() garage sales. <br>
+        @if(user.roles.size() != 0) {
+            <h3>Roles:</h3>
+            @user.roles.map { role =>
+                @role.toString() <br>
+            }
+        }
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Your Garage Sales</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped text-center" style="width: 50% !important">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Sale Name</th>
+                        <th class="text-center">Sale's Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @user.getSales().map { sale =>
+                    <tr>
+                        <td>
+                            <a href = "@routes.SaleController.editSale(sale.id)">@sale.id</a>
+                        </td>
+                        <td>
+                            <a href = "@routes.SaleController.editSale(sale.id)">@sale.saleName</a>
+                        </td>
+                        <td>
+                            <a href = "@routes.SaleController.editSale(sale.id)">@if(sale.inactive) {
+                                Inactive
+                            } else {
+                                Active
+                            }
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @if(user.superUser) {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Edit All Sales</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped text-center" style="width: 50% !important">
+                    <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Sale Name</th>
+                            <th class="text-center">Sale's Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @allSales.map { sale =>
+                        <tr>
+                            <td>
+                                <a href = "@routes.SaleController.editSale(sale.id)">@sale.id</a>
+                            </td>
+                            <td>
+                                <a href = "@routes.SaleController.editSale(sale.id)">@sale.saleName</a>
+                            </td>
+                            <td>
+                                <a href = "@routes.SaleController.editSale(sale.id)">@if(sale.inactive) {
+                                    Inactive
+                                } else {
+                                    Active
+                                }
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,44 @@
+@*
+What the cashier sees
+*@
+@(order: Orders, user: User)
+@usercomponent("Cashier Receipt", user) {
+    <div>
+        <hr>
+        <h4>Transaction Details</h4>
+        <h5 id="customer">Username: </h5> <strong>@order.username</strong>
+        <h5>Your Total is: </h5><strong>@order.total</strong>
+        <h5>Your Method of payment is: </h5><strong>@order.payment</strong>
+
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @order.itemsBought.map { item =>
+                    <tr>
+                        <td>
+                            <a href = "#">@item.id</a>
+                        </td>
+                        <td>
+                            <a href = "#">@item.itemName</a>
+                        </td>
+                        <td>
+                            <a href = "#">@item.price</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<script>
+        $('#message').html('Transaction is now complete!')
+</script>

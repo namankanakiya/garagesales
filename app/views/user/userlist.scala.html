@@ -1,0 +1,54 @@
+@*
+* This component is what superuser sees when requesting a userlist
+*@
+@(user: User)
+
+@if(user.superUser) {
+
+    @usercomponent("User List", user) {
+        <h1>All Users</h1>
+        <table class="table table-striped text-center" style="width: 50% !important">
+            <thead>
+                <tr>
+                    <th class="text-center">User ID</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+            @user.findAllUsers().map { user2 =>
+                <tr>
+                    <td>
+                        @user2.toString()
+                    </td>
+                    <td>
+                    @{
+                        if(user2.superUser) {
+                                <p>Super User</p>
+                        } else if(user2.locked) {
+                                <a href="@routes.UserController.unlockUser(user2.username)">Locked</a>
+                        } else {
+                                <a href="@routes.UserController.lockUser(user2.username)">Unlocked</a>
+                        }
+                    }
+                    </td>
+                    <td>
+
+                    @if(user2.roles.size() != 0) {
+                        @if(user2.superUser) {
+                            <p>All sales: Superuser</p>
+                        }
+                        @user2.roles.map { role =>
+                            <p>@role.toString() </p>
+                        }
+                    }
+
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+} else {
+    <h1> Access Denied </h1>
+}

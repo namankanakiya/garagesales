@@ -1,0 +1,228 @@
+@(canBookkeeper: Boolean, soldItems: List[Item], unsoldItems: List[Item], sale: Sale, user: User)
+@usercomponent("Edit Sale", user) {
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <div class="row-fluid">
+        <h3 style="display: inline">Sale #</h3><!--
+        --><h3 style="display: inline"> @sale.id</h3><!--
+        --><h3 style="display: inline"> Edit Name: <input id="sale-name" type="text" style="width: 10em; text-align: center" value="@sale.saleName">
+           </h3>
+        <br><br>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Sale's Organizers
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th class="text-center">Username</th>
+                        <th class="text-center">Administrator</th>
+                        <th class="text-center">Seller</th>
+                        <th class="text-center">Clerk</th>
+                        <th class="text-center">Cashier</th>
+                        <th class="text-center">Bookkeeper</th>
+                        <th class="text-center">Guest</th>
+                        <th class="text-center">Update Roles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @sale.rolesList.map { roles =>
+                    @defining(roles.getUser().username) { username =>
+                        <tr class="existing-users" id="@roles.getId()">
+                            <td class="username">@username</td>
+                            <td class="sales-admin"><input type="checkbox"
+                                @if(roles.salesAdmin) { checked="checked" }
+                                @if(user.username == username) { disabled="disabled" }>
+                            </td>
+                            <td class="seller"><input type="checkbox"
+                                @if(roles.seller) { checked="checked" }>
+                            </td>
+                            <td class="clerk"><input type="checkbox"
+                                @if(roles.clerk) { checked="checked" }>
+                            </td>
+                            <td class="cashier"><input type="checkbox"
+                                @if(roles.cashier) { checked="checked" }>
+                            </td>
+                            <td class="bookkeeper"><input type="checkbox"
+                                @if(roles.bookkeeper) { checked="checked" }>
+                            </td>
+                            <td class="guest"><input type="checkbox"
+                                @if(roles.guest) { checked="checked" }>
+                            </td>
+                            <td class="text-center"><button type="button" class="update-btn">Update</button></td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+
+            <h5 >Add a user</h5>
+            <input type="text" id="username-input" placeholder="Search username"></input>
+            <button type="button" id="search-button">Add</button>
+
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Unsold items in this sale.</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr id="heading">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>List Date</th>
+                        <th>Seller</th>
+                        <th>Print Tag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @unsoldItems.map { item =>
+                    <tr>
+                        <td>
+                            <a href = "@routes.ItemController.details(item.id)">@item.id</a>
+                        </td>
+                        <td class="itemName">
+                            <a href = "@routes.ItemController.details(item.id)">@item.itemName</a>
+                        </td>
+                        <td>
+                            <a href = "@routes.ItemController.details(item.id)">
+                            @if(item.biddable) {
+                                @item.bidAmount
+                            } else {
+                                @item.price
+                            }
+                            </a>
+                        </td>
+                        @if(canBookkeeper){
+                            <td>
+                                <a href = "@routes.ItemController.details(item.id)">@item.description</a>
+                            </td>
+                        }
+                        <td>
+                            <a href = "@routes.ItemController.details(item.id)">@item.listDate</a>
+                        </td>
+                        <td class="seller">
+                            <a href = "@routes.ItemController.details(item.id)">@item.seller</a>
+                        </td>
+                        <td>
+                        @if(request().username() == item.seller.username || user.superUser) {
+                            <a href = "@routes.ItemController.printTag(item.id)">
+                                <span class="glyphicon glyphicon-print"></span>
+                            </a>
+                        }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Sold items in this sale.</div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr id="heading">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>List Date</th>
+                        <th>Seller</th>
+                        <th>Print Tag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @soldItems.map { item =>
+                    <tr>
+                        <td>
+                            <a href = "@routes.ItemController.details(item.id)">@item.id</a>
+                        </td>
+                        <td class="itemName">
+                            <a href = "@routes.ItemController.details(item.id)">@item.itemName</a>
+                        </td>
+                        <td>
+                            <a href = "@routes.ItemController.details(item.id)">
+                            @if(item.biddable) {
+                                @item.bidAmount
+                            } else {
+                                @item.price
+                            }
+                            </a>
+                        </td>
+                        <td>
+                            <a href = "@routes.ItemController.details(item.id)">@item.description</a>
+                        </td>
+                        <td>
+                            <a href = "@routes.ItemController.details(item.id)">@item.listDate</a>
+                        </td>
+                        <td class="seller">
+                            <a href = "@routes.ItemController.details(item.id)">@item.seller</a>
+                        </td>
+                        <td>
+                        @if(request().username() == item.seller.username || user.superUser) {
+                            <a href = "@routes.ItemController.printTag(item.id)">
+                                <span class="glyphicon glyphicon-print"></span>
+                            </a>
+                        }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Sale's Resources</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-info"><a href="@routes.FinanceController.financeItem(sale.saleName)">Financial Report</a></li>
+                <li class="list-group-item list-group-item-success"><a href="@routes.CashierController.cashierTransaction">Cashier</a></li>
+                <li class="list-group-item list-group-item-warning"><a href="@routes.ItemController.newItem">Add items to sale</a></li>
+            </ul>
+            <div>
+                <form action="@routes.SaleController.toggleSaleStatus(sale.id)" method="post">
+                @if(sale.inactive) {
+                    <button type="submit" class="btn btn-primary">Reactivate Sale</button>
+                } else {
+                    <button type="submit" class="btn btn-danger">Deactivate Sale</button>
+                }
+                </form>
+                <br>
+            </div>
+            <div class="fb-share-button"
+            data-href="http://garagesale5.herokuapp.com/index"
+            data-layout="button_count"
+            data-size="small"
+            data-mobile-iframe="true"><a
+            class="fb-xfbml-parse-ignore"
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.
+        facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var saleID = "@sale.id";
+    </script>
+    <script src="@routes.Assets.versioned("javascripts/edit-sale.js")"></script>
+}

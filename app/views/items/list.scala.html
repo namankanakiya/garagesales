@@ -1,0 +1,56 @@
+@*
+    List of items
+*@
+@(itemMap: Map[Item, String], user: User)
+@usercomponent("List of Items", user) {
+
+    @for((item, value) <- itemMap) {
+        <div class="">
+            <div class="thumbnail">
+                <br>
+                @if(item.picture != null) {
+                    <img id="ItemPreview" alt="@value" src="@routes.Assets.versioned(value)" width="150" height="112" />
+                }
+                <h3><strong> @item.itemName </strong></h3>
+            <div class="caption">
+                <h5>Id: @item.id</h5>
+                <h5>Price: @item.price</h5>
+                <h5>List Date: @item.listDate</h5>
+                <h5>Seller: @item.seller</h5>
+                <p>@item.description</p>
+                <p >
+                </p>
+            </div>
+            <div id="@item.id" class="@item.seller">
+                @if(!item.sold && !item.biddable) {
+                    <a href = "@routes.OrderController.pushToCart(item.id)">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                    </a>
+                } else {
+                    <a href="#" class="bid-start"><span class="glyphicon glyphicon-pushpin" style="cursor: pointer"></span></a>
+                    <p class="bid-info" style="display: none">
+                        Enter amount (minimum $@item.bidAmount):<br />
+                        $<input class="bid-amount" type="text" style="width: 4em">
+                        <button class="bid-btn" type="button">Bid</button>
+                    </p>
+                }
+                &nbsp
+                <a href="@routes.ItemController.details(item.id)"> <span class="glyphicon glyphicon-pencil"></span></a>
+                &nbsp
+                @if(request().username() == item.seller.username) {
+                    <a href = "@routes.ItemController.printTag(item.id)">
+                        <span class="glyphicon glyphicon-print"></span>
+                    </a>
+                }
+            <br><br>
+            </div>
+            </div>
+        </div>
+    }
+
+    <script>
+            var username = "@user.username";
+    </script>
+
+    <script src="@routes.Assets.versioned("javascripts/items-list.js")"></script>
+}

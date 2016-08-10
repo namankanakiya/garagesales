@@ -1,0 +1,33 @@
+@(user: User)
+<div>
+    <div class="thumbnail">
+        <br>
+        <span class="glyphicon glyphicon-user"></span>
+        <div class="caption">
+            <h5>Welcome: @user.username.toUpperCase()</h5>
+            <p>
+                <h7>@user.email</h7><br>
+                <h7>@user.phoneNumber</h7><br>
+                <h7>@user.address</h7><br>
+                <h7>@user.description</h7><br>
+            </p>
+            <div class="btn-group btn-group-xs" data-toggle="modal" data-target="#myModal"><a href="#" class="btn btn-primary " role="button">
+                Edit Profile</a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <ul class="nav nav-pills nav-stacked" align="center">
+            <li><a href="@routes.HomeController.index" id="">My Garage Sales</a></li>
+            <li><a href="@routes.SaleController.newSale" id="">Start a Garage Sale</a></li>
+            <li><a href="@routes.ItemController.newItem" id="">Add Catalog Item</a></li>
+            <li><a href="@routes.FinanceController.financeMain" id="">My Finance Reports</a></li>
+
+            @if(user.superUser) {
+                <li><a href="@routes.UserController.userList()">View All Users</a></li>
+            }
+            <li><a href="@routes.HomeController.logout()">Logout</a></li>
+        </ul>
+    </div>
+    @modal(user.getForm())
+</div>

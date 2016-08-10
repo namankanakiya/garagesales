@@ -1,0 +1,48 @@
+@*
+Shopping Cart
+*@
+@(cart: List[Item], user: User, total: Double)
+@usercomponent("My shopping Cart", user) {
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">@user.username's Shopping Cart</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Clear</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @cart.map { item =>
+                    <tr class="dynamicRow">
+                        <td>
+                            <a href = "#">@item.id</a>
+                        </td>
+                        <td>
+                            <a href = "#">@item.itemName</a>
+                        </td>
+                        <td>
+                            <a href = "#">@item.price</a>
+                        </td>
+                        <td>
+                            <button class="btn btn-default, removeBtn" id="@item.id">Delete</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+            <h4 id="dynamic-total">Your subtotal is: @total</h4>
+            <h4>
+                <a href="@routes.OrderController.clearCart"><button class="btn btn-primary">Clear Cart</button></a>
+                <a href="@routes.OrderController.createOrder"><button class="btn btn-default">Checkout</button></a></h4>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/cart.js")"></script>
+}

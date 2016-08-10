@@ -1,0 +1,64 @@
+# Users
+- &bob !!models.User
+  email: bob@example.com
+  username: Bob
+  password: secret123
+  roles:
+    - GeneralUser
+- &user !!models.User
+  email: user@gmail.com
+  username: user
+  password: pass1234
+  roles:
+      - GeneralUser
+- &jane !!models.User
+  email: jane@example.com
+  name: Jane
+  password: secret123
+  roles:
+      - GeneralUser
+- &jeff !!models.User
+  email: jeff@example.com
+  username: Jeff
+  password: secret123
+  roles:
+      - GeneralUser
+# Sales
+- &sale1 !!models.Sale
+  saleName: sale1
+  members:
+    - *bob
+    - *jane
+    - *jeff
+- &sale2 !!models.Sale
+  saleName: sale2
+  members:
+    - *bob
+    - *jane
+# Task
+- !!models.Item
+  itemName: bed
+  sold: false
+  saleName: saleName
+  sale: *sale2
+  seller: *bob
+- !!models.Item
+  itemName: mattress
+  sold: false
+  saleName: Urgent
+  listDate: 2011-11-15
+  sale: *sale2
+  seller: *bob
+- !!models.Item
+  itemName: Milk
+  sold: false
+  saleName: Todo
+  sale: *sale1
+  seller: *jeff
+- !!models.Item
+  itemName: Check 1.2.4-RC2
+  sold: false
+  saleName: Todo
+  listDate: 2011-11-18
+  sale: *sale1
+  seller: *bob

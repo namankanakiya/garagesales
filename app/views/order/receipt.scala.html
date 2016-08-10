@@ -1,0 +1,37 @@
+@*
+    Receipt
+*@
+@(user: User, userOrder: Orders)
+    <div>
+        <h3>RECEIPT: Thank you for your recent purchase @user!</h3>
+        <p>Total Price: @userOrder.total</p>
+        <p>Payment Method: </p>
+        <p>Made by: @userOrder.username</p>
+
+        <p>Details of your items:</p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+            @userOrder.itemsBought.map { item =>
+                <tr>
+                    <td>
+                        <a href = "#">@item.id</a>
+                    </td>
+                    <td>
+                        <a href = "#">@item.itemName</a>
+                    </td>
+                    <td>
+                        <a href = "#">@item.price</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>

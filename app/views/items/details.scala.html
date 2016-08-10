@@ -1,0 +1,46 @@
+@*
+Page for adding new items.
+*@
+@(itemForm: play.data.Form[Item], item: Item, user: User)
+@usercomponent("Item Form", user) {
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Edit Item:</h3>
+        </div>
+        <div class="panel-body">
+        @helper.form(routes.ItemController.update("x"), 'enctype -> "multipart/form-data") {
+            <fieldset>
+                <legend>
+                    Item (@itemForm("itemName").valueOr("New"))
+                    <br />
+                    @if(item.biddable) {
+                        This item is open for bidding.
+                    }
+                </legend>
+                @helper.inputText(itemForm("id"), '_label -> "ID", 'readonly -> "readonly", 'class -> "form-control")
+                @helper.inputText(itemForm("itemName"), '_label -> "Item Name", 'class -> "form-control")
+                @if(item.biddable) {
+                    @helper.inputText(itemForm("bidAmount"), '_label -> "Highest Bid", 'readonly -> "readonly", 'class -> "form-control")
+                } else {
+                    @helper.inputText(itemForm("price"), '_label -> "Price", 'class -> "form-control")
+                }
+                @helper.textarea(itemForm("description"), '_label -> "Description", 'class -> "form-control")
+                @helper.inputFile(itemForm("picture"))
+                @if(!itemForm("picture").valueOr("").isEmpty()) {
+                    <div class="control-group">
+                        <div class = "controls">
+                            <img style="position: inherit;
+                                left: 50px;
+                                width: 150px;
+                                height: 150px;"
+                            src="/picture/@itemForm("id").value" class="form-control">
+                        </div>
+                    </div>
+                }
+            </fieldset>
+            <input type="submit" class="btn btn-primary" value="Save">
+            <a class="btn btn-default" href="@routes.ItemController.list()"> Cancel </a>
+        </div>
+    </div>
+}
+}

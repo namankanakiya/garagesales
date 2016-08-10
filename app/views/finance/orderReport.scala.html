@@ -1,0 +1,39 @@
+@*
+Financial Report to display all orders made and total.
+*@
+@(cart: List[Item], user: User, total: Double)
+@usercomponent("Financial Reports: Orders", user) {
+    <table class="table table-striped">
+        <h2>Total Amount: </h2>
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Buyer's Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        @cart.map { item =>
+            <tr>
+                <td>
+                    <a href = "#">@item.id</a>
+                </td>
+                <td>
+                    <a href = "#">@item.itemName</a>
+                </td>
+                <td>
+                    <a href = "#">@item.price</a>
+                </td>
+                <td>
+                    <a href="@routes.OrderController.removeItem(item.id)"><button class="btn btn-default">
+                        Delete</button></a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h4>Your subtotal is: @total </h4>
+    <h4><a href="@routes.OrderController.clearCart"><button class="btn btn-default">Clear Cart</button></a></h4>
+    <h4><a href="@routes.OrderController.createOrder"><button class="btn btn-default">Checkout</button></a></h4>
+}

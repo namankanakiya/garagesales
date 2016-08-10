@@ -1,0 +1,57 @@
+@*
+What the cashier sees
+*@
+@(user: User)
+@usercomponent("Cashier Transaction", user) {
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Hello, Cashier @user.username!</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                <form class="form-inline">
+                    <h4 id="message"></h4>
+                    <div class="form-group" id="buyer">
+                        <input type="text" class="form-control" name="username2" placeholder="Username" id="username2">
+                        <button class="btn btn-default" id="usernamebtn">Add user</button>
+                    </div>
+                    <div class="form-group" id="item">
+                        <input type="text" class="form-control" name="itemID" placeholder="ID Number" id="itemBox">
+                        <button class="btn btn-default" id="itembtn">Add item</button>
+                    </div>
+
+                    <div id="payment">
+                        <select class="form-control" name="payment" id="paymentmethod">
+                            <option>Cash</option>
+                            <option>Credit Card</option>
+                            <option>Paypal</option>
+                        </select>
+                        <button type="submit" class="btn btn-default" id="paymentbtn">Submit Payment</button>
+                    </div>
+
+                    <div>
+                        <br><br>
+                        <button class="btn btn-default" id="itemDone">Complete Adding Items</button>
+                        <a href="@routes.CashierController.createCashierOrder" id="final">Checkout</a>
+                    </div>
+                </form>
+            </div>
+
+
+            <div>
+                <hr>
+                <h4>Transaction Details</h4>
+                <h5 id="customer">Username: </h5> <strong id="customerName"></strong>
+                <h5>Your Subtotal is: </h5><strong id="subtotalCash"></strong>
+                <h5>Your Method of payment is: </h5><strong id="methodpayment"></strong>
+
+                <div>
+                    <hr>
+                    <ul id="cart"></ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/cashier.js")"></script>
+}

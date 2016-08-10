@@ -1,0 +1,21 @@
+@*
+Template for signed in users
+It renders sidebar and content
+*@
+@(pageTitle: String, user: User)(body: Html)
+
+    @main(pageTitle, user) {
+
+        <!--user's sidebar -->
+        <div class="col-sm-2 col-sm-offset-1">
+        @views.html.user.sidebar.render(user)
+        </div>
+            <!--content that user sees/should change based on what they selected-->
+        <div class="col-sm-8">
+        @body
+        </div>
+        <div>
+
+        </div>
+
+    }

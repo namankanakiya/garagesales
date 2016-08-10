@@ -1,0 +1,16 @@
+@*
+ * This template is what unlogged-in users will see before they log-in or register.
+ *@
+@(message: String, user: User)
+    @main("Welcome!", user) {
+        <h1>Welcome</h1>
+        <div class="login-register">
+            Already have an account?
+            <br />
+            <a href=@routes.HomeController.login()>Login</a>
+            <br /><br />
+            Don't have an account?
+            <br />
+            <a href="@routes.HomeController.register()">Register</a>
+        </div>
+    }

@@ -1,0 +1,36 @@
+@(item: Item)
+<!DOCTYPE html>
+<html>
+    <head>
+        Item Tag
+        <style>
+        table {
+            margin: auto auto;
+            text-align: center;
+            border: 1px solid blue;
+            width: 460px;
+            height: 280px;
+        }
+        </style>
+    </head>
+    <body>
+        <table style="page-break-after: always">
+            <tr>
+                <td colspan="2">Sale Event: <u>@item.saleName</u></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 2em"><strong>@item.itemName</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 0.8em"><em>(Listed @item.listDate)</em></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 1.7em">$@item.price</td>
+            </tr>
+            <tr>
+                <td><strong>Sold by: </strong>@item.seller</td>
+                <td><strong>Item </strong>#@item.id</td>
+            </tr>
+        </table>
+    </body>
+</html>

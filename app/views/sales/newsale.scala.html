@@ -1,0 +1,25 @@
+@*
+Create a new sale
+*@
+@(saleForm: play.data.Form[Sale], sale: Sale, id: String, user: User)
+@usercomponent("New Sale", user) {
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create a new sale:</h3>
+        </div>
+        <div class="panel-body">
+        @helper.form(routes.SaleController.save()) {
+            <fieldset>
+                <legend>
+                    Sale (@saleForm("saleName").valueOr("New"))
+                </legend>
+                @helper.inputText(saleForm("id").copy(value = Some(id)), '_label -> "ID", 'value -> id, 'readonly -> "readonly", 'class -> "form-control")
+                @helper.inputText(saleForm("saleName"), '_label -> "Sale Name", 'class -> "form-control")
+                @helper.inputText(saleForm("date"), '_label -> "Date", 'type -> "date", '_showConstraints -> false, 'class -> "form-control")
+            </fieldset>
+            <input type="submit" class="btn btn-primary" value="Save">
+            <a class="btn" href="@routes.SaleController.list()"> Cancel </a>
+        }
+        </div>
+    </div>
+}

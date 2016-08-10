@@ -1,0 +1,18 @@
+@*
+    Details about sales
+*@
+@(saleForm: play.data.Form[Sale], sale: Sale, user: User)
+    @usercomponent("New Sale", user) {
+        @helper.form(routes.SaleController.update("x")) {
+            <fieldset>
+                <legend>
+                    Sale (@saleForm("saleName").valueOr("New"))
+                </legend>
+                @helper.inputText(saleForm("id"), '_label -> "ID", 'readonly -> "readonly")
+                @helper.inputText(saleForm("saleName"), '_label -> "Sale Name")
+                @helper.inputText(saleForm("date"), '_label -> "Date", 'type -> "date", '_showConstraints -> false)
+            </fieldset>
+            <input type="submit" class="btn btn-primary" value="Save">
+            <a class="btn" href="@routes.SaleController.list()"> Cancel </a>
+        }
+    }

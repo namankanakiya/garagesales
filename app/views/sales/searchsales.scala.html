@@ -1,0 +1,31 @@
+@*
+    Search for sales
+*@
+@(sales: List[Sale], user: User)
+    @usercomponent("Sale Search", user) {
+        <h2>All Item</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Sale Name</th>
+                    <th>Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+            @sales.map { sale =>
+                <tr>
+                    <td>
+                        <a href = "@routes.SaleController.details(sale.id)">@sale.id</a>
+                    </td>
+                    <td>
+                        <a href = "@routes.SaleController.details(sale.id)">@sale.saleName</a>
+                    </td>
+                    <td>
+                        <a href = "@routes.SaleController.details(sale.id)">@sale.owner</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }

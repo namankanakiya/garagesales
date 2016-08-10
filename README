@@ -1,0 +1,115 @@
+A web application using Play Framework to manage multiple Garage Sales. Based on a MVC model, and developed with Agile principles.
+
+
+_________________________________________________________________________________________________________________________________________________
+General:
+This application will allow its users to plan, organize, implement, and close out a yard sale. More than one garage sale can be created at a time.
+
+
+
+Databases:
+Using a MySql remote server hosted by Azure currently. Connection via jdbc, and sql query handling through Ebean.
+
+
+
+User Roles:
+A user has a role in each garage sale in which they participate. This role is assigned by creating a sale or by the sale administrator. Note that users may have a different role for each sale in which they participate.
+
+SuperUser: The role of SuperUser is a global role that allows the user all privileges, including disabling and unlocking users and acting as the Sale Administrator for any sale.
+
+Sale Administrator: The user who opens (or creates) a sale is automatically assigned the role of Sale Administrator (SA) for this sale. The SA may assign the Sale Administrator role to any other user which gives them the same authority over the sale as the original SA. The SA has authority to access all of the features available within a sale, including closing it. The SA also has the authority to assign any of the other roles to any user for this sale.
+
+Seller: A seller has access to update the catalog, change prices, initiate advertising, print tags, etc. In other words, a seller can do anything the clerk, cashier, and bookkeeper can do.
+
+Clerk: A clerk has access to view the catalog, print tags, view catalog reports, etc.
+
+Cashier: A Cashier has access to sell items and create receipts.
+
+Bookkeeper: A Bookkeeper has access to the financial reporting features.
+
+Guest: A Guest is allowed to browse the catalog and bid on items when that feature is available. By default, all users are granted Guest access into all sales.
+
+
+
+sad
+Login / Registration
+To use the site, a person must be a registered user. To register, a person must enter their email, name, login/user name.
+
+To login, the person enters their login/user name and their password. If correct, the student is allowed access to the system, otherwise they are re-prompted for their login information. If there are 3 incorrect login attempts, then the account is locked until an administrator unlocks it.
+
+
+
+
+
+Logout
+We need a way to change users. The application should allow the current user to log out so that a different user or admin can log in. Each user's information should be kept private from the others. Only an admin should be able to browse all the reviews and ratings.
+
+
+
+
+
+Profile
+Each user after registration may create and edit a profile. A user profile consists of the registration information plus their address and contact information. A display of the profile should also shows all of the roles currently assigned to the user.
+
+
+
+
+
+Creating a Sale
+Creating a sale takes the name of the sale and other information such as the date and time of the sale. It creates an empty catalog, makes the creator a Sale Administrator, and allows the creator to assign roles to other people if they desire.
+
+
+
+
+
+Adding or Updating an Item
+Adding an item allows the user to describe and price the item. It assigns the item a unique number (a stock number) for reference. 
+
+
+
+
+
+Printing a Tag
+The user can print tags for each selected item, or each sale.
+
+
+
+
+Ringing up a Sale
+A Cashier can ring up a sale by entering the stock number of the items being purchased (or look them up in the catalog), print a receipt for the transaction, and deduct the sold items from the inventory. The transaction information is saved for the financial reports.
+
+
+
+
+Financial Reports
+A Bookkeeper is able to view financial reports. One report lists the transactions and the amount received for each with a final total. Other reports described further below.
+
+
+
+Closing the Sale
+Closing the sale by the Sale Administrator marks the sale closed, preventing any further modification and takes it off the display of open sales. The catalog and reports should still be able to be viewed.
+
+
+
+
+Admin Feature - Unlock Account
+If a user has incorrectly logged in 3 times in a row, their account is locked, and they are unable to login. If a locked user tries to login, they should not be allowed to, and the system should respond with a notification that their account is locked. The Superuser should have a way to unlock a locked account.
+
+
+
+
+Admin Feature - User list
+An Superuser can request a listing of all registered users in the system. This should include their user name and status (active or locked).
+
+
+
+Additional Features:
+--Use social media to advertise the sale (it helps to list some of the items available
+--Prices can be changed to support hagglers; allow the Seller to set limits on how much the prices can be lowered
+--Photos stored for catalog descriptions
+--Provides email receipts
+--Catalog (test) available online at garagesale5.herokuapp.com
+--Competetive bidding allowed on preorders
+--Multiple customer support (multiple user db support)
+--Sale by seller list. Report of all items that did not sell.
+--database backend with jdbc connectivity.

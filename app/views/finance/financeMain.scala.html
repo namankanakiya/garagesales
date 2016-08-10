@@ -1,0 +1,59 @@
+@*
+What sale organizer sees for finance
+*@
+@(sales: Set[String], activeSales: Set[String], inactiveSales: Set[String], user: User)
+@usercomponent("Financial Reports: Orders", user) {
+    @if(user.superUser) {
+        <h2 class="panel-title">Select sale to view report:</h2>
+        <hr>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Your Sales</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked">
+                @sales.map { sale =>
+                    <li role="presentation"><a href="@routes.FinanceController.financeItem(sale)">@sale</a></li>
+                }
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">All Active Sales</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked">
+                    @activeSales.map { sale =>
+                        <li role="presentation"><a href="@routes.FinanceController.financeItem(sale)">@sale</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Inactive Sales</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked">
+                    @inactiveSales.map { sale =>
+                        <li role="presentation"><a href="@routes.FinanceController.financeItem(sale)">@sale</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    } else {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Select sale to view report:</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-pills nav-stacked">
+                @sales.map { sale =>
+                    <li role="presentation"><a href="@routes.FinanceController.financeItem(sale)">@sale</a></li>
+                }
+                </ul>
+            </div>
+        </div>
+    }
+}

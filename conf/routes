@@ -1,0 +1,94 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home Page
+GET         /                                controllers.HomeController.home
+# An example controller showing a sample index page
+GET         /index                           controllers.HomeController.index
+# UpdateProfile Post
+POST        /index                           controllers.HomeController.updateProfile
+# Login
+GET         /login                           controllers.HomeController.login
+# Search for existing username
+GET         /register/                       controllers.HomeController.userExists(username)
+# Registration page
+GET         /register                        controllers.HomeController.register
+# Post Login
+POST        /login                           controllers.HomeController.authenticate
+# Post register
+POST        /register                        controllers.HomeController.newRegistration
+# Logout
+GET         /logout                          controllers.HomeController.logout
+
+# Sale
+GET         /sales                           controllers.SaleController.list
+# New
+GET         /sales/new                       controllers.SaleController.newSale
+# Item Search
+GET         /sales/search/:searchTerm        controllers.SaleController.search(searchTerm)
+# Get tags
+GET         /sales/tags/:id                  controllers.SaleController.printAllTags(id)
+# Item details
+GET         /sales/:id                       controllers.SaleController.details(id)
+# Save edits
+POST        /sales/:id                       controllers.SaleController.update(id)
+# Save a product
+POST        /sales                           controllers.SaleController.save
+
+# Look at a products picture
+GET         /picture/:id                     controllers.ItemController.picture(id: String)
+
+# Item
+GET         /items                           controllers.ItemController.list
+# New Item
+GET         /items/new                       controllers.ItemController.newItem
+# Item Search
+GET         /items/search/:searchTerm        controllers.ItemController.search(searchTerm:String)
+# Item details
+GET         /items/:id                       controllers.ItemController.details(id)
+# Get tag
+GET         /items/tag/:id                   controllers.ItemController.printTag(id)
+# Save edits
+POST        /items/:id                       controllers.ItemController.update(id: String)
+# Save a product
+POST        /items                           controllers.ItemController.save
+# Bid on an item
+POST        /bid                             controllers.ItemController.bid()
+
+# Order (Transaction)
+GET         /order/:id                       controllers.OrderController.pushToCart(id)
+GET         /cart                            controllers.OrderController.cart
+GET         /receipt                         controllers.OrderController.createOrder
+GET         /clear                           controllers.OrderController.clearCart
+GET         /removeItem                      controllers.OrderController.removeItem(id: String)
+POST        /updatetotal                     controllers.OrderController.updateTotal()
+
+#Order -- Cashier's perspective
+GET         /cashier                         controllers.CashierController.cashierTransaction
+GET         /cashier/validateUser            controllers.CashierController.validateUsername(username)
+GET         /cashier/validateItem            controllers.CashierController.validateItem(itemID)
+GET         /cashier/payment                 controllers.CashierController.takePayment(payment)
+GET         /cashier/completeOrder           controllers.CashierController.createCashierOrder
+
+#Finance Reports
+GET         /finance                         controllers.FinanceController.financeMain
+GET         /finance/item                    controllers.FinanceController.financeItem(id)
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
+
+# Sales Admin
+GET         /editsale/:id                    controllers.SaleController.editSale(id)
+POST        /updateroles                     controllers.SaleController.updateRoles()
+POST        /adduser                         controllers.SaleController.addUser()
+POST        /changesalename                  controllers.SaleController.changeSaleName()
+POST        /togglesalestatus/:id            controllers.SaleController.toggleSaleStatus(id)
+
+# Super User items
+GET         /userlist                        controllers.UserController.userList()
+GET         /unlockUser/:id                  controllers.UserController.unlockUser(id: String)
+GET         /lockUser/:id                    controllers.UserController.lockUser(id: String)
+
+# About Page
+GET         /about                           controllers.HomeController.about

@@ -1,0 +1,52 @@
+@*
+List of all sales
+*@
+@(sales: List[Sale], user: User)
+@usercomponent("Garage Sales", user) {
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">All Active Sales</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Sale Name</th>
+                        <th>Owner</th>
+                        <th>Tag</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @sales.map { sale =>
+                    <tr>
+                        @if(request().username() == sale.owner.username || user.superUser) {
+                            <td>
+                                <a href = "@routes.SaleController.editSale(sale.id)">@sale.id</a>
+                            </td>
+                            <td>
+                                <a href = "@routes.SaleController.editSale(sale.id)">@sale.saleName</a>
+                            </td>
+                            <td>
+                                <a href = "@routes.SaleController.editSale(sale.id)">@sale.owner</a>
+                            </td>
+                            <td>
+                            @if(!sale.items.isEmpty()) {
+                                <a href = "@routes.SaleController.printAllTags(sale.id)"><span class="glyphicon glyphicon-print"></span></a>
+                            }
+                            </td>
+                        } else {
+                            <td>@sale.id</td>
+                            <td>@sale.saleName</td>
+                            <td>@sale.owner</td>
+                            <td></td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}

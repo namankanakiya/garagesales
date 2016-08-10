@@ -1,0 +1,56 @@
+@*
+    this is the login component
+*@
+
+@(form: play.data.Form[HomeController.Login], user: User)
+
+@main("User Login", user) {
+    @if(form.hasGlobalErrors) {
+        <p class="alert alert-danger" id="error">
+        @form.globalError.message
+            @if(form.globalError.message.equals("Locked")) {
+                <br>Your account has been locked for security purposes.
+                Please contact a super user to unlock your account.
+                <br> Email:  <a href="mailto:superuser@@garagesale5.com">
+                    superuser@@garagesales5.com </a>
+            }
+        </p>
+    }
+    @if(flash.contains("success")) {
+        <p class="success" id="success">
+        @flash.get("success")
+        </p>
+    }
+    @helper.form(routes.HomeController.authenticate) {
+        <h1>Login</h1>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <br>
+                        <label for="exampleInputEmail1" class="">Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <br>
+                        <label for="exampleInputPassword1" class="">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                </div>
+
+               <div class="row">
+                   <div class="col-md-4 col-md-offset-4">
+                       <br>
+                       <button class="btn btn-default" type="submit">Login</button>
+                       <a href = @routes.HomeController.home><button class="btn btn-default" type="button">Cancel</button></a>
+                   </div>
+               </div>
+
+            </div>
+        </form>
+    }
+}

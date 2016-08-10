@@ -1,0 +1,39 @@
+@*
+Search results
+*@
+@(items: List[Item], user: User)
+@usercomponent("Searched Items", user) {
+    <h2 id="head">Searched Items</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>List Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        @items.map { item =>
+            <tr>
+                <td>
+                    <a href = "@routes.ItemController.details(item.id)">@item.id</a>
+                </td>
+                <td>
+                    <a href = "@routes.ItemController.details(item.id)">@item.itemName</a>
+                </td>
+                <td>
+                    <a href = "@routes.ItemController.details(item.id)">@item.price</a>
+                </td>
+                <td>
+                    <a href = "@routes.ItemController.details(item.id)">@item.description</a>
+                </td>
+                <td>
+                    <a href = "@routes.ItemController.details(item.id)">@item.listDate</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

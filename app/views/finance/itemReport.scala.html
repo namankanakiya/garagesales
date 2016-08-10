@@ -1,0 +1,82 @@
+@*
+Financial Report to display all orders made and total.
+*@
+@(saleName: String, cart: List[Item], unsold: List[Item], user: User, total: Double)
+    @usercomponent("Financial Reports: Items", user) {
+        <h2 class="title">Finance Report for @saleName</h2>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Sold Items</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <h5>Profit Amount: $<strong>@total</strong></h5>
+                    <hr>
+                    <thead>
+                        <tr>
+                            <th>Item Id</th>
+                            <th>Item's Name</th>
+                            <th>Price</th>
+                            <th>Sale's Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @cart.map { item =>
+                        <tr>
+                            <td>
+                                <a href = "#">@item.id</a>
+                            </td>
+                            <td>
+                                <a href = "#">@item.itemName</a>
+                            </td>
+                            <td>
+                                <a href = "#">@item.price</a>
+                            </td>
+                            <td>
+                                <a href = "#">@item.sale</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Unsold Items</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <h4></h4>
+                    <thead>
+                        <tr>
+                            <th>Item Id</th>
+                            <th>Item's Name</th>
+                            <th>Price</th>
+                            <th>Sale's Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @unsold.map { item =>
+                        <tr>
+                            <td>
+                                <a href = "#">@item.id</a>
+                            </td>
+                            <td>
+                                <a href = "#">@item.itemName</a>
+                            </td>
+                            <td>
+                                <a href = "#">@item.price</a>
+                            </td>
+                            <td>
+                                <a href = "#">@item.sale</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }

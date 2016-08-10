@@ -1,0 +1,46 @@
+@*
+New Items
+*@
+@(itemForm: play.data.Form[Item], item: Item, id: String, user: User, saleList: Seq[(String, String)])
+@usercomponent("Item Form", user) {
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Add an item to your sale:</h3>
+        </div>
+        <div class="panel-body">
+        @helper.form(routes.ItemController.save(), 'enctype -> "multipart/form-data") {
+            <fieldset>
+                <legend>
+                    Item (@itemForm("itemName").valueOr("New"))
+                </legend>
+                @helper.select(
+                    itemForm("saleName"),
+                    options = saleList,
+                    '_label -> "Select Sale to sell in",
+                    '_showconstraints -> false
+                )
+                @helper.checkbox(itemForm("biddable"), '_label -> "Open for bidding? ", 'class -> "form-control")
+                @helper.inputText(itemForm("bidFraction").copy(value = Some("1.0")), '_label -> "Starting Bid Fraction", 'class -> "form-control")
+                @helper.inputText(itemForm("id").copy(value = Some(id)), '_label -> "ID", 'value -> id, 'readonly -> "readonly", 'class -> "form-control")
+                @helper.inputText(itemForm("itemName"), '_label -> "Item Name", 'class -> "form-control")
+                @helper.inputText(itemForm("price"), '_label -> "Price", 'class -> "form-control")
+                @helper.textarea(itemForm("description"), '_label -> "Description", 'class -> "form-control")
+                @helper.inputFile(itemForm("picture"), 'class -> "form-control")
+                @if(!itemForm("picture").valueOr("").isEmpty()) {
+                    <div class="control-group">
+                        <div class = "controls">
+                            <img style="position: relative;
+                                left: 50px;
+                                height: 80px;
+                                width:80px"
+                            src="/picture/@itemForm("id").value">
+                        </div>
+                    </div>
+                }
+            </fieldset>
+            <input type="submit" class="btn btn-primary" value="Save">
+            <a class="btn" href="@routes.ItemController.list()"> Cancel </a>
+        }
+        </div>
+    </div>
+}

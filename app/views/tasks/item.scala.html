@@ -1,0 +1,17 @@
+@*
+    Page for each item's detail.
+*@
+
+@(item: Item)
+
+<li data-task-id="@item.id">
+    <h4>@item.itemName</h4>
+    @if(item.listDate != null) {
+        <time datetime="@item.listDate">
+        @item.listDate</time>
+    }
+
+    @if(item.seller != null && item.seller.email != null) {
+        <span class="seller">@item.seller.email</span>
+    }
+</li>
